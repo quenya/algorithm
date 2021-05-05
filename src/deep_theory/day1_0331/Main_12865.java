@@ -1,11 +1,11 @@
-package deep_theory;
+package deep_theory.day1_0331;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class prop_12865 {
+public class Main_12865 {
     static int N, K;
     static int dp[][], W[], V[];
 

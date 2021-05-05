@@ -1,4 +1,4 @@
-package deep_theory;
+package deep_theory.day1_0331;
 
 import java.io.BufferedReader;
 import java.io.IOException;
