@@ -1,6 +1,7 @@
 package blog_study;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -14,16 +15,16 @@ public class Main_11438 {
     static int k;
 
     public static void main(String[] args) throws IOException {
+        System.setIn(new FileInputStream("./src/blog_study/M_11438.txt"));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         k = getK();
         tree = new ArrayList[N + 1];
         d = new int[N + 1];
         p = new int[N + 1][k];
-        for (int i = 0; i <= N; i++) {
+        for (int i = 0; i <= N; i++)
             tree[i] = new ArrayList<>();
-        }
-        for (int i = 0; i < N-1; i++) {
+        for (int i = 0; i < N - 1; i++) {
             String[] s = br.readLine().split(" ");
             int a = Integer.parseInt(s[0]);
             int b = Integer.parseInt(s[1]);
@@ -64,15 +65,14 @@ public class Main_11438 {
             b = temp;
         }
         // 깊이 맞추기
-        for (int i = k-1; i >=0; i--) {
+        for (int i = k - 1; i >= 0; i--) {
             int diff = d[a] - d[b];
-            if ((diff & 1<<i) != 0) {
+            if ((diff & 1 << i) != 0)
                 a = p[a][i];
-            }
         }
-        if (a==b) return a;
+        if (a == b) return a;
         // 공통 부모 찾기
-        for (int i = k-1; i >= 0; i--) {
+        for (int i = k - 1; i >= 0; i--) {
             if (p[a][i] != p[b][i]) {
                 a = p[a][i];
                 b = p[b][i];
@@ -82,7 +82,7 @@ public class Main_11438 {
     }
 
     private static void fillParent() {
-        for (int j = 0; j < k-1; j++)
+        for (int j = 0; j < k - 1; j++)
             for (int i = 1; i <= N; i++)
                 p[i][j + 1] = p[p[i][j]][j];
     }
@@ -91,7 +91,7 @@ public class Main_11438 {
         for (int child : tree[n]) {
             if (d[child] == 0) {
                 p[child][0] = n;
-                d[child] = d[n]+1;
+                d[child] = d[n] + 1;
                 DFS(child);
             }
         }
