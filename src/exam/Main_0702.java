@@ -4,11 +4,11 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class Main_0702 {
-    static int[] minTree;
-    static int[] maxTree;
-    static int NN = 1;
+    static int[] minTree;   // 최소값 index tree
+    static int[] maxTree;   // 최대값 index tree
+    static int NN = 1;  // index tree의 leaf node 숫자
     public static void main(String[] args) throws IOException {
-        System.setIn(new FileInputStream("./src/exam/Main_0702.txt"));
+//        System.setIn(new FileInputStream("./src/exam/Main_0702.txt"));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int T = Integer.parseInt(br.readLine());
@@ -26,17 +26,18 @@ public class Main_0702 {
             // input
             for (int i = 0; i < N; i++) {
                 arr[i] = Integer.parseInt(st.nextToken());
-                insert(NN + i, arr[i]);
+                insert(NN + i, arr[i]); // index tree 에 추가
             }
             // two pointer
-            int ans = 0;
-            int left = 1;
-            int right = 1;
+            int ans = 0;    // 최대 기간
+            int left = 1;   // 처음 날짜
+            int right = 1;  // 마지막 날짜
             while (right <= N) {
+                if (right-left < ans) break;    // 남은 구간의 길이가 구해진 기간보다 짧다면, 가지치기
                 int min = min(1, 1, NN, left, right);
                 int max = max(1, 1, NN, left, right);
                 int diff = max - min;
-                if (diff <= K) {
+                if (diff <= K) {    // 주가 움직임이 없다고 인정되는 기간
                     ans = Math.max(ans, right-left);
                     right++;
                 }
@@ -47,18 +48,21 @@ public class Main_0702 {
         bw.close();
         br.close();
     }
+    // 최소 index tree 에서 구간 조회
     static int min(int pos, int l, int r, int ql, int qr) {
         if (qr < l || r < ql) return Integer.MAX_VALUE;
         if (ql <= l && r <= qr) return minTree[pos];
         int mid = (l+r)/2;
         return Math.min(min(pos*2, l, mid, ql, qr), min(pos*2+1, mid+1, r, ql, qr));
     }
+    // 최대 index tree 에서 구간 조회
     static int max(int pos, int l, int r, int ql, int qr) {
         if (qr < l || r < ql) return Integer.MIN_VALUE;
         if (ql <= l && r <= qr) return maxTree[pos];
         int mid = (l+r)/2;
         return Math.max(max(pos*2, l, mid, ql, qr), max(pos*2+1, mid+1, r, ql, qr));
     }
+    // 최소/최대 index tree에 동시에 삽입
     static void insert(int pos, int value) {
         minTree[pos] = value;
         maxTree[pos] = value;
