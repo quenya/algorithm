@@ -33,7 +33,7 @@ public class Main_0702 {
             int left = 1;   // 처음 날짜
             int right = 1;  // 마지막 날짜
             while (right <= N) {
-                if (right-left < ans) break;    // 남은 구간의 길이가 구해진 기간보다 짧다면, 가지치기
+                if (N-left < ans) break;    // 남은 구간의 길이가 구해진 기간보다 짧다면, 가지치기
                 int min = min(1, 1, NN, left, right);
                 int max = max(1, 1, NN, left, right);
                 int diff = max - min;
